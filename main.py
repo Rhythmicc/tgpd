@@ -1,7 +1,7 @@
 from QuickStart_Rhy.NetTools.NormalDL import normal_dl
 from QuickStart_Rhy.ImageTools.ImagePreview import image_preview
 from QuickProject.Commander import Commander
-from QuickProject import QproDefaultConsole
+from QuickProject import QproDefaultConsole, QproInfoString
 from urllib.parse import unquote
 from inspect import isfunction
 import pyperclip
@@ -24,6 +24,7 @@ def funcWrapper(func, url, *args, **kwargs):
 
         for item in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text):
             item = item.strip('/')
+            QproDefaultConsole.print(QproInfoString, f'URL: {rt_url + item}')
             if isfunction(func):
                 func(rt_url + item, *args, **kwargs)
             elif isinstance(func, list):
