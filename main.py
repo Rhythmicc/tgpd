@@ -16,11 +16,12 @@ rt_url = 'https://telegra.ph/'
 
 def funcWrapper(func, url, *args, **kwargs):
     try:
-        os.chdir('./img')
-        dir_name = unquote(url.replace(rt_url, ''))
-        if not (os.path.exists(dir_name) and os.path.isdir(dir_name)):
-            os.mkdir(dir_name)
-        os.chdir(dir_name)
+        if isfunction(func) and func != image_preview:
+            os.chdir('./img')
+            dir_name = unquote(url.replace(rt_url, ''))
+            if not (os.path.exists(dir_name) and os.path.isdir(dir_name)):
+                os.mkdir(dir_name)
+            os.chdir(dir_name)
 
         for item in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text):
             item = item.strip('/')
