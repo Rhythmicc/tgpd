@@ -23,6 +23,7 @@ def funcWrapper(func, url, *args, **kwargs):
         os.chdir(dir_name)
 
         for item in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text):
+            item = item.strip('/')
             if isfunction(func):
                 func(rt_url + item, *args, **kwargs)
             elif isinstance(func, list):
