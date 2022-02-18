@@ -30,7 +30,7 @@ tgpd 是基于 [QuickProject (Qpro)](https://github.com/Rhythmicc/QuickProject) 
 
 ![](./img/readme/b65d8fbe4ebc1bd44dd7ff70a2cfc6a7.jpg)
 
-因此，你可以直接在拷贝链接后直接运行：
+因此，你可以在拷贝链接后直接运行：
 
 ```shell
 qrun dl # 下载至./img
