@@ -16,7 +16,7 @@ rt_url = 'https://telegra.ph/'
 
 def funcWrapper(func, url, *args, **kwargs):
     try:
-        if isfunction(func) and func != image_preview:
+        if (isfunction(func) and func != image_preview) or isinstance(func, list):
             os.chdir('./img')
             dir_name = unquote(url.replace(rt_url, ''))
             if not (os.path.exists(dir_name) and os.path.isdir(dir_name)):
