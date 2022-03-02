@@ -1,4 +1,4 @@
-from QuickStart_Rhy.NetTools.NormalDL import normal_dl
+from QuickStart_Rhy.NetTools.MultiSingleDL import multi_single_dl
 from QuickStart_Rhy.ImageTools.ImagePreview import image_preview
 from QuickProject.Commander import Commander
 from QuickProject import QproDefaultConsole, QproInfoString
@@ -6,6 +6,7 @@ from urllib.parse import unquote
 from inspect import isfunction
 import pyperclip
 import requests
+import time
 import re
 import os
 
@@ -16,34 +17,27 @@ rt_url = 'https://telegra.ph/'
 
 def funcWrapper(func, url, *args, **kwargs):
     try:
-        if (isfunction(func) and func != image_preview) or isinstance(func, list):
+        if (isfunction(func) and func == multi_single_dl) or (isinstance(func, dict) and multi_single_dl in func):
             os.chdir('./img')
             dir_name = unquote(url.replace(rt_url, ''))
             if not (os.path.exists(dir_name) and os.path.isdir(dir_name)):
                 os.mkdir(dir_name)
             os.chdir(dir_name)
+        
+        urls = [i.strip('/') for i in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text)]
+        flag = func == multi_single_dl if isfunction(func) else multi_single_dl in func
+        if flag:
+            if (isinstance(func, dict) and multi_single_dl in func):
+                func.pop(multi_single_dl)
+            files = multi_single_dl([rt_url + i.strip('/') for i in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text)])
+            if isinstance(func, dict):
+                for item in files:
+                    for f in func:
+                        f(item, **func[f])
+                        time.sleep(1)
+        else:
+            [f(url, **func[f]) for url in urls for f in func] if isinstance(func, dict) else [func(url, *args, **kwargs) for url in urls]
 
-        for item in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text):
-            item = item.strip('/')
-            QproDefaultConsole.print(QproInfoString, f'URL: {rt_url + item}')
-            if isfunction(func):
-                func(rt_url + item, *args, **kwargs)
-            elif isinstance(func, list):
-                _fs = [i[0] for i in func]
-                if normal_dl in _fs:
-                    imgName = normal_dl(rt_url + item, **func[_fs.index(normal_dl)][1])
-                    has_dl = True
-                else:
-                    imgName = ''
-                    has_dl = False
-
-                for f in func:
-                    if f[0] == normal_dl:
-                        continue
-                    if has_dl:
-                        f[0](imgName, **f[1])
-                    else:
-                        f[0](rt_url + item, **f[1])
     except KeyboardInterrupt:
         exit(0)
     except:
@@ -57,7 +51,7 @@ def dl(url: str = pyperclip.paste()):
 
     :param url: the url like https://telegra.ph/*
     """
-    funcWrapper(normal_dl, url)
+    funcWrapper(multi_single_dl, url)
 
 
 @app.command()
@@ -78,10 +72,10 @@ def dl_preview(url: str = pyperclip.paste()):
     :param url: the url like https://telegra.ph/*
     """
     funcWrapper(
-        [
-            (normal_dl, {'exit_if_exist': True}),
-            (image_preview, {})
-        ], url
+        {
+            multi_single_dl: {'exit_if_exist': True},
+            image_preview: {}
+        }, url
     )
 
 
