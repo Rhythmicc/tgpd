@@ -29,14 +29,14 @@ def funcWrapper(func, url, *args, **kwargs):
         if flag:
             if (isinstance(func, dict) and multi_single_dl in func):
                 func.pop(multi_single_dl)
-            files = multi_single_dl([rt_url + i.strip('/') for i in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text)])
+            files = multi_single_dl([rt_url + i.strip('/') for i in urls])
             if isinstance(func, dict):
                 for item in files:
                     for f in func:
                         f(item, **func[f])
                         time.sleep(1)
         else:
-            [f(url, **func[f]) for url in urls for f in func] if isinstance(func, dict) else [func(url, *args, **kwargs) for url in urls]
+            [f(rt_url + url, **func[f]) for url in urls for f in func] if isinstance(func, dict) else [func(rt_url + url, *args, **kwargs) for url in urls]
 
     except KeyboardInterrupt:
         exit(0)
