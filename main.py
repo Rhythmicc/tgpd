@@ -10,7 +10,7 @@ import time
 import re
 import os
 
-app = Commander()
+app = Commander(seg_flag=True)
 
 rt_url = 'https://telegra.ph/'
 
@@ -18,7 +18,6 @@ rt_url = 'https://telegra.ph/'
 def funcWrapper(func, url, *args, **kwargs):
     try:
         if (isfunction(func) and func == multi_single_dl) or (isinstance(func, dict) and multi_single_dl in func):
-            os.chdir('./img')
             dir_name = unquote(url.replace(rt_url, ''))
             if not (os.path.exists(dir_name) and os.path.isdir(dir_name)):
                 os.mkdir(dir_name)
