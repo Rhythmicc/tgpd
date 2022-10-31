@@ -3,7 +3,7 @@
 ## Install
 
 ```shell
-pip3 install tgpd -U
+pip3 install git+https://github.com/Rhythmicc/tgpd.git -U
 ```
 
 ## Usage
@@ -12,9 +12,3 @@ pip3 install tgpd -U
 tgpd --help
 ```
 
-## Developer
-
-If you need use global config, just edit `__config__.py`:
-1. make `enable_config = True`.
-2. edit `questions` list.
-3. using `config` at `main.py`.
