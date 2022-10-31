@@ -98,12 +98,10 @@ def complete():
         return
 
     from QuickProject.Qpro import gen_complete
-    import shutil
+    from QuickProject import apply_fig_complete
 
     gen_complete("tgpd")
-    shutil.copy(
-        "complete/fig/tgpd.ts", os.path.join(user_root, ".fig/autocomplete/src/tgpd.ts")
-    )
+    apply_fig_complete("tgpd")
 
 
 def main():

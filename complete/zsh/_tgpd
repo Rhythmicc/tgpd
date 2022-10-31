@@ -1,0 +1,48 @@
+#compdef tgpd
+
+local cur prev
+cur=${words[CURRENT]}
+prev=${words[CURRENT-1]}
+
+(( $+functions[_tgpd_args_comp] )) || 
+_tgpd_args_comp() {
+    local -a opt_args
+    if [[ ${prev} == dl ]]; then
+        opt_args=(
+            
+        )
+    elif [[ ${prev} == preview ]]; then
+        opt_args=(
+            --concat:'是否合并图片'
+        )
+    elif [[ ${prev} == dl_preview ]]; then
+        opt_args=(
+            --concat:'是否合并图片'
+        )
+else
+    _arguments -S -s '*:filename:_files'
+    return
+fi
+
+    _describe subcommand opt_args
+}
+
+(( $+functions[_tgpd_main] )) || 
+_tgpd_main() {
+    local -a args
+    args=(
+        --help:'获取帮助'
+        dl:'下载套图链接里的图片'
+        preview:'预览套图链接里的图片'
+        dl_preview:'下载并预览套图链接里的图片'
+        complete:'生成补全脚本并应用至全局'
+    )
+
+    _describe -t common-commands 'common commands' args && _ret=0
+}
+
+if (( ${#words} >= 3 )); then
+    _tgpd_args_comp
+else
+    _tgpd_main
+fi
