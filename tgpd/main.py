@@ -60,8 +60,8 @@ def preview(
     from QuickStart_Rhy.ImageTools.ImagePreview import image_preview
 
     if concat:  # 每十张图片合并一次
-        for i in range(0, len(imgs), 8):
-            image_preview(imgsConcat(imgs[i : i + 8]))
+        for i in range(0, len(imgs), step):
+            image_preview(imgsConcat(imgs[i : i + step]))
     else:
         for img in imgs:
             image_preview(img)
