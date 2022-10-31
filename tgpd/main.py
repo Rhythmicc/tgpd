@@ -37,7 +37,9 @@ def dl(url: str, _with_content: bool = False):
 
 
 @app.command()
-def preview(url: str, concat: bool = False, _is_urls_content: bool = False):
+def preview(
+    url: str, concat: bool = False, step: int = 8, _is_urls_content: bool = False
+):
     """
     预览套图链接里的图片
 
@@ -58,15 +60,15 @@ def preview(url: str, concat: bool = False, _is_urls_content: bool = False):
     from QuickStart_Rhy.ImageTools.ImagePreview import image_preview
 
     if concat:  # 每十张图片合并一次
-        for i in range(0, len(imgs), 10):
-            image_preview(imgsConcat(imgs[i : i + 10]))
+        for i in range(0, len(imgs), 8):
+            image_preview(imgsConcat(imgs[i : i + 8]))
     else:
         for img in imgs:
             image_preview(img)
 
 
 @app.command()
-def dl_preview(url: str, concat: bool = False):
+def dl_preview(url: str, concat: bool = False, step: int = 8):
     """
     下载并预览套图链接里的图片
 
@@ -77,6 +79,7 @@ def dl_preview(url: str, concat: bool = False):
         "preview",
         app.real_call("dl", url, _with_content=True),
         concat=concat,
+        step=step,
         _is_urls_content=True,
     )
 
