@@ -1,7 +1,7 @@
 from QuickProject.Commander import Commander
 from . import *
 
-app = Commander()
+app = Commander(name)
 
 
 @app.command()
@@ -82,29 +82,6 @@ def dl_preview(url: str, concat: bool = False, step: int = 8):
         step=step,
         _is_urls_content=True,
     )
-
-
-@app.command()
-def complete():
-    """
-    生成补全脚本并应用至全局
-    """
-    from . import _ask
-
-    if not _ask(
-        {
-            "type": "confirm",
-            "message": "此操作将生成complete文件夹, 并将补全脚本应用至全局, 是否继续?",
-            "default": False,
-        }
-    ):
-        return
-
-    from QuickProject.Qpro import gen_complete
-    from QuickProject import apply_fig_complete
-
-    gen_complete("tgpd")
-    apply_fig_complete("tgpd")
 
 
 def main():
