@@ -4,7 +4,42 @@ const completionSpec: Fig.Spec = {
     "subcommands": [
         {
             "name": "--help",
-            "description": "获取帮助"
+            "description": "获取帮助",
+            "options": [
+                {
+                    "name": "--hidden",
+                    "description": "显示隐藏命令"
+                }
+            ]
+        },
+        {
+            "name": "complete",
+            "description": "获取补全列表",
+            "args": [],
+            "options": [
+                {
+                    "name": "--team",
+                    "description": "团队名",
+                    "isOptional": true,
+                    "args": {
+                        "name": "team",
+                        "description": "团队名"
+                    }
+                },
+                {
+                    "name": "--token",
+                    "description": "团队token",
+                    "isOptional": true,
+                    "args": {
+                        "name": "token",
+                        "description": "团队token"
+                    }
+                },
+                {
+                    "name": "--is_script",
+                    "description": "是否为脚本"
+                }
+            ]
         },
         {
             "name": "dl",
@@ -30,6 +65,15 @@ const completionSpec: Fig.Spec = {
                 {
                     "name": "--concat",
                     "description": "是否合并图片"
+                },
+                {
+                    "name": "--step",
+                    "description": "<step>",
+                    "isOptional": true,
+                    "args": {
+                        "name": "step",
+                        "description": "<step>"
+                    }
                 }
             ]
         },
@@ -46,14 +90,17 @@ const completionSpec: Fig.Spec = {
                 {
                     "name": "--concat",
                     "description": "是否合并图片"
+                },
+                {
+                    "name": "--step",
+                    "description": "<step>",
+                    "isOptional": true,
+                    "args": {
+                        "name": "step",
+                        "description": "<step>"
+                    }
                 }
             ]
-        },
-        {
-            "name": "complete",
-            "description": "生成补全脚本并应用至全局",
-            "args": [],
-            "options": []
         }
     ]
 };
