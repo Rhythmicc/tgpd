@@ -26,7 +26,9 @@ def dl(url: str, _with_content: bool = False):
 
     from QuickStart_Rhy.NetTools.MultiSingleDL import multi_single_dl
 
-    res = multi_single_dl(urls, rt_dir=dir_name + "/")
+    res = multi_single_dl(urls, rt_dir=dir_name + "/", name_map={
+        i: f"{_id + 1}" for _id, i in enumerate(urls)
+    })
 
     if _with_content:
         content_ls = []
@@ -61,7 +63,7 @@ def preview(
 
     if concat:  # 每十张图片合并一次
         for i in range(0, len(imgs), step):
-            image_preview(imgsConcat(imgs[i : i + step]))
+            image_preview(imgsConcat(imgs[i: i + step]))
     else:
         for img in imgs:
             image_preview(img)
