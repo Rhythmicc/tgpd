@@ -12,3 +12,23 @@ executable = "python3 -m tgpd.main"
 input_file = ""
 template_root = ""
 enable_complete = true
+
+[tool.poetry]
+name = "tgpd"
+version = "0.1.0"
+description = "download or preview telegram graph in iTerm2"
+authors = ["Rhythmicc <rhythmlian.cn@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Qpro = "^0.13.1"
+QuickStart-Rhy = "^0.7.33"
+
+[tool.poetry.scripts]
+tgpd = "tgpd.main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

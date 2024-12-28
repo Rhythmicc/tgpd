@@ -80,6 +80,6 @@ def get_images_url(url):
     import requests
 
     return [
-        rt_url + i.strip("/")
+        rt_url + i.strip("/") if i.startswith("/") else i
         for i in re.findall('<img.*?src="(.*?)".*?>', requests.get(url).text)
     ]
